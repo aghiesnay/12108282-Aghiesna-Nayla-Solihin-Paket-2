@@ -15,41 +15,50 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand"><i class='bx bxs-smile icon'></i>
-            Admin / Petugas</a>
+            {{ Auth::user()->role == 'admin' ? 'Admin Site' : 'Employee Site' }}</a>
         <ul class="side-menu">
             <li><a href="/dashboard" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
-            <!-- Pendataan Barang Untuk Admin and Petugas -->
-            <li class="divider" data-text="main">Main</li>
+            <!-- Product Untuk Admin and Employee -->
+            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'employee')
+                <li class="divider" data-text="main">Main</li>
                 <li>
                     <a href="#"><i class='bx bxs-category icon'></i> Produk <i
                             class='bx bx-chevron-right icon-right'></i></a>
                     <ul class="side-dropdown">
-                        <li><a href="/pendataan-barang">Pendataan Barang</a></li>
-                        <li><a href="/data-penjualan-barang">Data Penjualan</a></li>
+                        <li><a href="/product">Products</a></li>
+                        <li><a href="/data-sales">Data Sales</a></li>
 
-                        {{-- Hak akses untuk petugas --}}
-                            <li><a href="/penjualan-barang">Penjualan Barang</a></li>
+                        {{-- Hak akses untuk Employee --}}
+                        @if (Auth::user()->role == 'employee')
+                            <li><a href="/sale">Sale</a></li>
+                        @endif
                     </ul>
                 </li>
+            @endif
             <!-- Hak Akses Untuk Admin -->
+            @if (Auth::user()->role == 'admin')
                 <li class="divider" data-text="user">User</li>
                 <li>
                     <a href="#"><i class='bx bxs-user icon'></i> User <i
                             class='bx bx-chevron-right icon-right'></i></a>
                     <ul class="side-dropdown">
-                        <a href="/tambah-user"><i></i> Tambah User <i></i></a>
+                        <a href="/user"><i></i> Tambah User <i></i></a>
                         <li><a href="/data-user">Data User</a></li>
                     </ul>
                 </li>
-            <!-- User Management for Petugas Only -->
-                <li class="divider" data-text="pelanggan">Pelanggan</li>
+            @endif
+            <!-- Hak Akses Untuk Employee-->
+            @if (Auth::user()->role == 'employee')
+                <li class="divider" data-text="customer">Customer</li>
                 <li>
-                    <a href="#"><i class='bx bxs-user icon'></i> Pelanggan <i
+                    <a href="#"><i class='bx bxs-user icon'></i> Customer <i
                             class='bx bx-chevron-right icon-right'></i></a>
                     <ul class="side-dropdown">
-                        <li><a href="/data-pelanggan">Data Pelanggan</a></li>
+                        <li><a href="/data-customer">Data Customer</a></li>
                     </ul>
                 </li>
+            @endif
+               
         </ul>
     </section>
     <!-- END SIDEBAR -->

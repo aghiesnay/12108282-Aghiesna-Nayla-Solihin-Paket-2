@@ -18,20 +18,24 @@
                     <h3>User</h3>
                 </div>
                 <div>
-                    <form action="" method="POST" class="mx-3">
+                    <form action="{{ route('updateUser', $user->id)}}" method="POST" class="mx-3">
                         @csrf
                         @method('PATCH')
                         <div class="d-flex row">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" value="">
+                            <input type="text" name="name" class="form-control" value="{{$user->name}}">
                         </div>
                         <div class="d-flex row">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" value="">
+                            <input type="text" name="email" class="form-control" value="{{$user->email}}">
+                        </div>
+                        <div class="d-flex row">
+                            <label>Password</label>
+                            <input type="text" name="password" class="form-control">
                         </div>
                         <div class="d-flex row">
                             <label>Role</label>
-                            <input type="text" name="role" class="form-control" value="">
+                            <input type="text" name="role" class="form-control" value="{{$user->role}}">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     </form>

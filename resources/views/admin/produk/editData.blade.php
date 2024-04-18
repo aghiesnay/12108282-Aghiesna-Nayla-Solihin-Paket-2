@@ -18,20 +18,24 @@
                     <h3>Produk</h3>
                 </div>
                 <div>
-                    <form action="" method="POST" class="mx-3">
+                    <form action="{{ route('updateProduct', $product->id) }}" method="POST" class="mx-3">
                         @csrf
                         @method('PATCH')
                         <div class="d-flex row">
                             <label>Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control">
+                            <input type="text" name="name" class="form-control" value="{{$product->name}}">
                         </div>
                         <div class="d-flex row">
-                            <label>Harga</label>
-                            <input type="number" name="harga" class="form-control">
+                            <label>Price</label>
+                            <input type="number" name="price" class="form-control" value="{{$product->price}}">
                         </div>
                         <div class="d-flex row">
                             <label>Stok</label>
-                            <input type="number" name="stok" class="form-control">
+                            <input type="number" name="stok" class="form-control" value="{{$product->stok}}">
+                        </div>
+                        <div class="d-flex row">
+                            <label>Image</label>
+                            <input type="img" name="img" class="form-control" value="{{$product->img}}">
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>

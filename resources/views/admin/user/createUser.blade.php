@@ -17,12 +17,12 @@
                     <h3>User</h3>
                 </div>
                 <div>
-                    <form action="" method="POST">
+                    <form action="/create-user" method="POST">
                         @csrf
                         <div class="row">
                           <div class="col">
-                            <label>Username</label>
-                            <input type="text" class="form-control" name="username">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name">
                           </div>
                           <div class="col">
                             <label>Email</label>
@@ -39,7 +39,7 @@
                               <select class="custom-select" id="inputGroupSelect04" name="role">
                                 <option selected>Pilih Role</option>
                                 <option value="admin">Admin</option>
-                                <option value="petugas">Petugas</option>
+                                <option value="employee">Employee</option>
                               </select>
                             </div>
                           </div>
