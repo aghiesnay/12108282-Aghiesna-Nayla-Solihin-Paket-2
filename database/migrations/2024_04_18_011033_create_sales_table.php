@@ -19,6 +19,8 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->date('sales_date');
             $table->double('total_price');
+            $table->double('pay');
+            $table->double('change');
             $table->timestamps();
         });
     }

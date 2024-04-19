@@ -18,20 +18,21 @@ class Controller extends BaseController
     }
 
     public function auth(Request $request) {
+        // dd($request->all());
         $request->validate([
             'username' => 'username|exists:users, username',
             'password' => 'required',
         ], [
-            'username.exists' => 'username belum tersedia',
-            'username.required' => 'username harus diisi',
-            'password.required' => 'password harus diisi'
+            'username.exists' => 'Username is not available',
+            'username.required' => 'Username is required',
+            'password.required' => 'Password is required'
         ]);
 
         $user = $request->only('name', 'password');
             if(Auth::attempt($user)) {
-                return redirect('/dashboard')->with('sucess', 'Berhasil login!');
+                return redirect('/dashboard')->with('sucess', 'Login successful!');
             } else {
-                return redirect()->back()->with('notAllowed', 'Name atau Password salah!');
+                return redirect()->back()->with('notAllowed', 'Incorrect username or password!');
             }
     }
 
@@ -61,7 +62,7 @@ class Controller extends BaseController
             'role' => $request->role,
         ]);
 
-        return redirect('/data-user')->with('successAdd', 'Berhasil menambahkan akun!');
+        return redirect('/data-user')->with('successAdd', 'Add account successful!');
     }
 
     public function dataUser() {
@@ -89,12 +90,12 @@ class Controller extends BaseController
             'role' =>  $request->role,
         ]);
 
-        return redirect('/data-user')->with('successUpdate', 'Data user berhasil diperbarui!');
+        return redirect('/data-user')->with('successUpdate', 'User data updated successfully!');
     }
 
     public function deleteUser($id) {
         User::where('id', $id)->delete();
-        return redirect()->back()->with('deleted', 'Berhasil menghapus akun!');
+        return redirect()->back()->with('deleted', 'Successfully deleted account!');
     }
 
     public function logout() {

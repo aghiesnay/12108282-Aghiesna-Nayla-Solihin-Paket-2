@@ -3,11 +3,11 @@
     <!-- MAIN -->
     <main>
         <div class="text-center"> <!-- Centering content -->
-            <h1 class="title">Tambah User</h1>
+            <h1 class="title">Add User</h1>
             <ul class="breadcrumbs">
                 <li><a href="/dashboard">Home</a></li>
                 <li class="divider">/</li>
-                <li><a href="#" class="active">Tambah User</a></li>
+                <li><a href="#" class="active">Add User</a></li>
             </ul>
         </div>
 
@@ -30,9 +30,9 @@
                           </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col input-field">
                               <label>Password</label>
-                              <input type="text" class="form-control" name="password">
+                              <input type="password" class="form-control" name="password">
                             </div>
                             <div class="col">
                               <label>Role</label>

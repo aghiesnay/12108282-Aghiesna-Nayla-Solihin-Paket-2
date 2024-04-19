@@ -15,4 +15,13 @@ class Detail_Sale extends Model
         'amount',
         'sub_total',
     ];
+
+    protected $table = 'detail_sales'; 
+
+    public function product()
+    {
+        // Many-to-one relationship with Product model, using 'product_id' as foreign key
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
+

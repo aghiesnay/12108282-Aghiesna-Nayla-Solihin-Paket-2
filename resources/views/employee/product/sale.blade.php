@@ -18,28 +18,25 @@
                     <h3>Products</h3>
                 </div>
                 <div class="row">
-                    @foreach ($products as $index => $data)
+                    @foreach ($products as $product)
                         <div class="col-md-4">
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $data->name }}</h5>
-                                            <p class="card-text">{{ 'Rp ' . number_format($data->price, 0, ',', '.') }}</p>
-                                            <p class="card-text">Stok: {{ $data->stok }}</p>
-                                            <div class="input-group mb-3">
-                                                <button class="btn btn-secondary decrement" data-index="{{ $index }}">-</button>
-                                                <input type="number" class="form-control quantity" value="0" min="0" max="{{ $data->stok }}" data-index="{{ $index }}" style="width: 60px;">
-                                                <button class="btn btn-secondary increment" data-index="{{ $index }}">+</button>
-                                            </div>
-                                            <form action="{{ route('addToCart') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $data->id }}"> <!-- Menggunakan ID produk sebagai nilai indeks -->
-                                                <input type="hidden" name="quantity" value="0" class="quantity-field">
-                                                <button type="submit" class="btn btn-primary add-to-cart">Add to Cart</button>
-                                            </form>                                            
-                                        </div>
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{ asset($product->img) }}" alt="Product Image" class="card-img-top product-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <p class="card-text">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</p>
+                                    <p class="card-text">Stok: {{ $product->stok }}</p>
+                                    <div class="input-group mb-3">
+                                        <button class="btn btn-secondary decrement" data-id="{{ $product->id }}">-</button>
+                                        <input type="number" class="form-control quantity" value="0" min="0" max="{{ $product->stok }}" data-id="{{ $product->id }}" style="width: 60px;">
+                                        <button class="btn btn-secondary increment" data-id="{{ $product->id }}">+</button>
                                     </div>
+                                    <form action="{{ route('addToCart') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" value="0" class="quantity-field">
+                                        <button type="submit" class="btn btn-primary add-to-cart">Add to Cart</button>
+                                    </form>                                            
                                 </div>
                             </div>
                         </div>
@@ -50,6 +47,12 @@
     </main>
     <!-- MAIN -->
 
+    <style>
+        .product-image {
+            height: 200px; 
+        }
+    </style>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const quantities = document.querySelectorAll('.quantity');
@@ -59,7 +62,8 @@
 
             increments.forEach((button, index) => {
                 button.addEventListener('click', function() {
-                    const input = quantities[index];
+                    const productId = button.dataset.id;
+                    const input = document.querySelector(`.quantity[data-id="${productId}"]`);
                     const max = parseInt(input.max);
                     let currentValue = parseInt(input.value);
                     if (currentValue < max) {
@@ -71,7 +75,8 @@
 
             decrements.forEach((button, index) => {
                 button.addEventListener('click', function() {
-                    const input = quantities[index];
+                    const productId = button.dataset.id;
+                    const input = document.querySelector(`.quantity[data-id="${productId}"]`);
                     let currentValue = parseInt(input.value);
                     if (currentValue > 0) {
                         input.value = currentValue - 1;

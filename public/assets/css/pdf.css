@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.breadcrumbs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumbs li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.breadcrumbs li.divider::after {
+    content: '/';
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #ccc;
+}
+
+.content-data {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.col {
+    flex: 1;
+}

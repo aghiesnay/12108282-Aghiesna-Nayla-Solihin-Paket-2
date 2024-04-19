@@ -18,36 +18,36 @@
             {{ Auth::user()->role == 'admin' ? 'Admin Site' : 'Employee Site' }}</a>
         <ul class="side-menu">
             <li><a href="/dashboard" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
-            <!-- Product Untuk Admin and Employee -->
+            <!-- Product for Admin and Employee -->
             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'employee')
                 <li class="divider" data-text="main">Main</li>
                 <li>
-                    <a href="#"><i class='bx bxs-category icon'></i> Produk <i
+                    <a href="#"><i class='bx bxs-category icon'></i> Product <i
                             class='bx bx-chevron-right icon-right'></i></a>
                     <ul class="side-dropdown">
                         <li><a href="/product">Products</a></li>
                         <li><a href="/data-sales">Data Sales</a></li>
 
-                        {{-- Hak akses untuk Employee --}}
+                        {{-- Sale for Employee --}}
                         @if (Auth::user()->role == 'employee')
                             <li><a href="/sale">Sale</a></li>
                         @endif
                     </ul>
                 </li>
             @endif
-            <!-- Hak Akses Untuk Admin -->
+            <!-- Uuser for Admin -->
             @if (Auth::user()->role == 'admin')
                 <li class="divider" data-text="user">User</li>
                 <li>
                     <a href="#"><i class='bx bxs-user icon'></i> User <i
                             class='bx bx-chevron-right icon-right'></i></a>
                     <ul class="side-dropdown">
-                        <a href="/user"><i></i> Tambah User <i></i></a>
+                        <a href="/user"><i></i> Add User <i></i></a>
                         <li><a href="/data-user">Data User</a></li>
                     </ul>
                 </li>
             @endif
-            <!-- Hak Akses Untuk Employee-->
+            <!-- Customer for Employee-->
             @if (Auth::user()->role == 'employee')
                 <li class="divider" data-text="customer">Customer</li>
                 <li>

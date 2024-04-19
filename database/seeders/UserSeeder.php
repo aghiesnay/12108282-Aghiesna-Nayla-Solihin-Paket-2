@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //Akun admin
+        //Admin account
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        //Akun employee
+        //Employee account
         User::create([
             'name' => 'employee',
             'email' => 'employee@gmail.com',

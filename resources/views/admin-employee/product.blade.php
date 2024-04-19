@@ -12,14 +12,14 @@
         </div>
 
         <div class="data">
-            {{-- Hak akses untuk admin --}}  
+            {{-- Access for admin --}}   
             @if(Auth::user()->role == 'admin')
                 <div class="content-data">
                     <div class="head">
                         <h3>Add Product</h3>
                     </div>
                     <div>
-                        <form action="/create-product" method="POST" class="mx-3">
+                        <form action="/create-product" method="POST" class="mx-3" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex row">
                                 <label>Name</label>
@@ -34,8 +34,8 @@
                                 <input type="number" name="stok" class="form-control">
                             </div>
                             <div class="d-flex row">
-                                <label>Img</label>
-                                <input type="img" name="img" class="form-control">
+                                <label>Image</label>
+                                <input type="file" name="img" class="form-control">
                             </div>
 
                             <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -72,9 +72,10 @@
                                         <td>{{$product->name}}</td>
                                         <td>{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</td>
                                         <td>{{$product->stok}}</td>
-                                        <td>{{$product->img}}</td>
-                                        
-                                        {{-- Hak akses untuk admin --}}
+                                        <td>
+                                            <img src="{{ asset($product->img) }}" alt="Product Image" width="50" height="50">
+                                        </td>                                        
+                                        {{-- Access for admin --}}   
                                         @if(Auth::user()->role == 'admin')
                                             <td class="d-flex justify-content-between">
                                                 <div>

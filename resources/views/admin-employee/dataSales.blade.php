@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Customer Name</th>
+                                <th scope="col"> Name</th>
                                 <th scope="col">Date Sale</th>
                                 <th scope="col">Total Price</th>
 								<th scope="col">Made By</th>
@@ -33,18 +33,27 @@
                             @foreach ($sales as $sale)
                                 <tr>
                                     <th scope="row">{{$loop->iteration}}</th>
-                                    <td>{{$sale->sale->name ?? 'Nama tidak tersedia' }}</td>
+                                    <td>{{$sale->customer->name ?? 'Nama tidak tersedia' }}</td>
                                     <td>{{$sale->sales_date}}</td>
                                     <td>{{ 'Rp ' . number_format($sale->total_price, 2, ',', '.') }}</td>
                                     <td>{{$sale->user->name ?? 'Name tidak tersedia' }}</td>
                                     <td class="d-flex">
                                         <div class="ml-3">
-                                            <form method="POST" action="{{ route('deleteSale', ['id' => $sale->id]) }}">
+                                            <form method="GET" action="{{ route('detailSale.pdf', ['id' => $sale->id]) }}">
                                                 @csrf 
-                                                <button type="submit" class="btn btn-danger">Hapus</button>
-                                            </form>  
+                                                <button type="submit" class="btn btn-warning">Detail</button>
+                                            </form> 
                                         </div>
+                                        @if(Auth::user()->role == 'admin')
+                                            <div class="ml-3">
+                                                <form method="POST" action="{{ route('deleteSale', ['id' => $sale->id]) }}">
+                                                    @csrf 
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                </form>  
+                                            </div>
+                                        @endif
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

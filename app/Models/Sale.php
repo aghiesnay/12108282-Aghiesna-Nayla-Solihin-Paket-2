@@ -12,17 +12,21 @@ class Sale extends Model
     protected $fillable = [
         'customer_id',
         'user_id',
-        'sale_date',
+        'sales_date',
         'total_price',
+        'pay',
+        'change',
     ];
 
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer', 'customer_id');
+        //Many to one
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        //Many to one
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -10,7 +10,7 @@ class ProductController extends Controller
     public function product()
     {
         $products = Product::all();
-        return view('admin-petugas/product', compact('products'));
+        return view('admin-employee/product', compact('products'));
     }
 
     public function createProduct(Request $request)
@@ -21,46 +21,79 @@ class ProductController extends Controller
             'name' => 'required',
             'price' => 'required',
             'stok' => 'required',
-            // 'img' => 'required',
+            'img' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
+
+        
+        // upload img
+        $imagePath = null;
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img'), $imageName);
+            $imagePath = 'assets/img/' . $imageName;
+        }
 
         //add product
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'stok' => $request->stok,
-            'img' => $request->img,
+            'img' => $imagePath,
         ]);
 
-        return redirect()->back()->with('successAdd', 'Berhasil menambahkan product!');
+        return redirect()->back()->with('successAdd', 'Successfully!');
     }
 
     public function editProduct($id) {
         $product = Product::findOrFail($id);
-        return view('/admin/produk/editData', compact('product'));
+        return view('/admin/product/editData', compact('product'));
     }
 
-    public function updateProduct (Request $request, $id) {
-        // dd($request->all());
+    public function updateProduct(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required',
             'price' => 'required',
             'stok' => 'required',
-            // 'img' => 'required',
+            'img' => 'image|mimes:jpeg,png,jpg,gif', // Validation for type
         ]);
 
-        Product::where('id', $id)->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'stok' => $request->stok,
-            'img' => $request->img,
-        ]);
+        // Retrieve product data to be updated
+        $product = Product::findOrFail($id);
 
-        return redirect('/product')->with('successUpdate', 'Data product berhasil diperbarui!');
+        // If any images are uploaded
+        if ($request->hasFile('img')) {
+            // Delete old images if any
+            if ($product->img) {
+                unlink(public_path($product->img)); 
+            }
+            // Upload a new image
+            $image = $request->file('img');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img'), $imageName);
+            $imagePath = 'assets/img/' . $imageName;
+
+            $product->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'stok' => $request->stok,
+                'img' => $imagePath,
+            ]);
+        } else {
+            // If no image is uploaded, only update data without image
+            $product->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'stok' => $request->stok,
+            ]);
+        }
+
+        return redirect('/product')->with('successUpdate', 'Successfully updated');
     }
 
     public function deleteProduct($id) {
         Product::where('id', $id)->delete();
-        return redirect()->back()->with('deleted', 'Berhasil menghapus akun!');
+        return redirect()->back()->with('deleted', 'Successfully deleted!');
     }
 }

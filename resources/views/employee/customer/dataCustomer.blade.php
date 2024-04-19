@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Customer Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">No HP</th>
                                 <th scope="col">Address</th>
                             </tr>
